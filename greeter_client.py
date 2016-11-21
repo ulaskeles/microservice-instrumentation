@@ -11,10 +11,10 @@ def callback(future):
     try:
         print(future.result().message)
     except grpc.RpcError as ge:
-        if ge._state.code == grpc.StatusCode.CANCELLED:
-            print('Request canceled')
-        elif ge._state.code == grpc.StatusCode.UNAVAILABLE:
-            print('Service unavailable')
+        if ge.code() == grpc.StatusCode.CANCELLED:
+            print('Request canceled: %s' % future.arg)
+        elif ge.code() == grpc.StatusCode.UNAVAILABLE:
+            print('Service unavailable: %s' % future.arg)
     except Exception as e:
         print(e)
 
@@ -31,10 +31,13 @@ def run():
             future1 = stub1.SayHello.future(
                 helloworld_pb2.HelloRequest(name='foo'))
 
+            future1.arg = 'foo'
+            future1.add_done_callback(callback)
+
             future2 = stub2.SayHello.future(
                 helloworld_pb2.HelloRequest(name='bar'))
 
-            future1.add_done_callback(callback)
+            future2.arg = 'bar'
             future2.add_done_callback(callback)
 
             time.sleep(5)
