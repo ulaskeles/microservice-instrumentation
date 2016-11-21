@@ -2,6 +2,9 @@
 Use futures to call multiple gRPC services and process returned results with
 callbacks.
 
+#Install
+pip install -r requirements.txt
+
 #Run
 python greeter_server.py 50051 3
 
