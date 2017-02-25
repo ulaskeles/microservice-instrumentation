@@ -1,7 +1,3 @@
-#Documentation
-Use futures to call multiple gRPC services and process returned results with
-callbacks.
-
 #Install
 pip install -r requirements.txt
 

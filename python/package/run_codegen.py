@@ -1,4 +1,4 @@
-from grpc.tools import protoc
+from grpc_tools import protoc
 
 protoc.main(
     (
